@@ -61,12 +61,19 @@ abstract class SinglyLinkedIntList extends IntList {
 
   override def foldRight(initial: Int)(reduceFunc: (Int, Int) => Int): Int = this match {
     case Empty => initial
-    case Cons(_, _) => reduceFunc(this.tail.foldRight(initial)(reduceFunc), head)
+    case Cons(_, _) => reduceFunc(head, this.tail.foldRight(initial)(reduceFunc))
   }
 
-  override def reduceLeft(reduceFunc: (Int, Int) => Int): Int = ???
+  override def reduceLeft(reduceFunc: (Int, Int) => Int): Int = this.tail.tail match {
 
-  override def reduceRight(reduceFunc: (Int, Int) => Int): Int = ???
+    case Empty => reduceFunc(head, tail.head)
+    case Cons(_, _) => Cons(reduceFunc(head, tail.head), tail.tail).reduceLeft(reduceFunc)
+  }
+
+  override def reduceRight(reduceFunc: (Int, Int) => Int): Int = this.tail match {
+    case Empty => reduceFunc(head, 0)
+    case Cons(_, _) => reduceFunc(head, this.tail.reduceRight(reduceFunc))
+  }
 
   override def forAll(predicateFunc: Int => Boolean): Boolean = ???
 
