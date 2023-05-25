@@ -101,5 +101,14 @@ abstract class SinglyLinkedIntList extends IntList {
 
   override def insertSorted(elem: Int): IntList = ???
 
-  override def insertionSort: IntList = ???
+  override def insertionSort: IntList = {
+    this.tail match {
+      case Empty => this
+      case Cons(_, _) =>
+        if (this.head > this.tail.head)
+          Cons(head=this.tail.head, Cons(this.head, this.tail.tail).insertionSort).insertionSort
+        else
+          Cons(head = this.head, this.tail.insertionSort)
+    }
+  }
 }
