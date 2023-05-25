@@ -1,6 +1,8 @@
 package list.implementation
 import list.traits.IntList
 
+import scala.annotation.tailrec
+
 /**
   * A companion object for the singly linked list.
   * This enables creating lists list this: val list = SinglyLinkedIntList(1,2,3)
@@ -75,7 +77,27 @@ abstract class SinglyLinkedIntList extends IntList {
     case Cons(_, _) => reduceFunc(head, this.tail.reduceRight(reduceFunc))
   }
 
-  override def forAll(predicateFunc: Int => Boolean): Boolean = ???
+  override def forAll(predicateFunc: Int => Boolean): Boolean = {
+    @tailrec
+    def reverse(subject:IntList, predicateFunc: Int => Boolean): Boolean = {
+      subject match {
+        case Empty =>
+          true
+        case Cons(_, _) => if (predicateFunc(subject.head)){
+          reverse(subject.tail, predicateFunc)
+        }
+        else true
+      }
+    }
+    this.tail match {
+      case Empty => if (predicateFunc(this.head)) true else false
+      case Cons(_, _) =>
+        if (predicateFunc(this.head)){
+          reverse(this.tail, predicateFunc)
+        }
+        else this.tail.forAll(predicateFunc)
+    }
+  }
 
   override def insertSorted(elem: Int): IntList = ???
 
