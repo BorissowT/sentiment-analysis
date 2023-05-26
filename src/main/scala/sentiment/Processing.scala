@@ -26,14 +26,18 @@ class Processing {
      * 
      * Hint: Use the flatMap function
      */
-     ???
+    //val result = l.flatMap(x=>List(getWords(x._2)).filter(_.nonEmpty))
+    getWords(l.flatMap(x=>List(x._2)).mkString(" "))
+
   }
   
   def countWords(l:List[String]):List[(String,Int)]={
     /*
      *  Gets a list of words and counts the occurrences of the individual words
      */
-    ???
+
+     l.map(x => (x, l.count(_ == x))).distinct
+
   }
 
   /**********************************************************************************************
