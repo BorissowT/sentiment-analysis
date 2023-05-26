@@ -16,7 +16,7 @@ class Processing {
      * 2. Shifts all words to lower case
      * 3. Extracts all words and put them into a list of strings
      */
-    ???
+    line.toLowerCase().replaceAll("[^A-Za-z]", " ").split(" ").filter(_.nonEmpty).toList
   }
   
   def getAllWords(l:List[(Int,String)]):List[String]={
