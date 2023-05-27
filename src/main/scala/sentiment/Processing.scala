@@ -51,7 +51,12 @@ class Processing {
     l.flatMap(x=>getWords(x._2).flatMap(y=>List((x._1, y))))
   }
 
-  def createInverseIndex(l: List[(Int, String)]): Map[String, List[Int]] = ???
+  def createInverseIndex(l: List[(Int, String)]): Map[String, List[Int]] ={
+
+
+   getAllWordsWithIndex(l).flatMap(x=>Map(x._2 -> getAllWordsWithIndex(l).map(y => if (y._2 == x._2) y._1 else -1).filterNot(_ == -1))).toMap
+
+  }
 
   def orConjunction(words: List[String], invInd: Map[String, List[Int]]): List[Int] = ???
 
