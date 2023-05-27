@@ -47,7 +47,9 @@ class Processing {
    *********************************************************************************************
   */
 
-  def getAllWordsWithIndex(l: List[(Int, String)]): List[(Int, String)] = ???
+  def getAllWordsWithIndex(l: List[(Int, String)]): List[(Int, String)] = {
+    l.flatMap(x=>getWords(x._2).flatMap(y=>List((x._1, y))))
+  }
 
   def createInverseIndex(l: List[(Int, String)]): Map[String, List[Int]] = ???
 
