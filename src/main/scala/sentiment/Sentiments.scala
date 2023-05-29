@@ -26,7 +26,17 @@ class Sentiments(sentiFile: String) {
     * ********************************************************************************************
     */
 
-  def getDocumentGroupedByCounts(filename: String, wordCount: Int): List[(Int, List[String])] = ???
+  def getDocumentGroupedByCounts(filename: String, wordCount: Int): List[(Int, List[String])] = {
+    val url = getClass.getResource("/" + filename).getPath
+    val src = scala.io.Source.fromFile(url.replaceAll("%20", " "))
+    val iter = src.getLines()
+    val lines: List[String] = (for (row <- iter) yield {
+      row
+    }).toList
+    src.close()
+    lines.map(x => proc.getWords(x)).flatten.grouped(wordCount).toList.zipWithIndex.map(x=>(x._2+1,x._1))
+
+  }
 
   def getDocumentSplitByPredicate(filename: String, predicate:String=>Boolean): List[(Int, List[String])] = ???
 

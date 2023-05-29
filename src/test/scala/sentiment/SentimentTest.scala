@@ -21,7 +21,8 @@ class SentimentTest extends AnyFunSuite {
   test("test getDocumentGroupedByCounts"){
     
     val data= sentiAnalyse.getDocumentGroupedByCounts("MobyDickShort.txt",10)
-    val res= List((1,List("call", "me", "ishmael", "some", "years", "ago", "never", "mind", "how", "long")),
+    val res= List(
+        (1,List("call", "me", "ishmael", "some", "years", "ago", "never", "mind", "how", "long")),
         (2,List("precisely", "having", "little", "or", "no", "money", "in", "my", "purse", "and")),
         (3,List("nothing", "particular", "to", "interest", "me", "on", "shore", "i", "thought", "i")),
         (4,List("would", "sail", "about", "a", "little", "and", "see", "the", "watery", "part")),
