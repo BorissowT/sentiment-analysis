@@ -58,9 +58,16 @@ class Processing {
 
   }
 
-  def orConjunction(words: List[String], invInd: Map[String, List[Int]]): List[Int] = ???
+  def orConjunction(words: List[String], invInd: Map[String, List[Int]]): List[Int] = {
 
-  def andConjunction(words: List[String], invInd: Map[String, List[Int]]): List[Int] = ???
+    invInd.flatMap(x => List(if (words.contains(x._1)) x._2 else List(-1))).toList.flatten.filterNot(_ == -1)
+  }
+
+  def andConjunction(words: List[String], invInd: Map[String, List[Int]]): List[Int] = {
+    val result_1 = words.flatMap(x => List(invInd.get(x))).flatten.flatten // TODO: why two times flatten
+    val result_2 = result_1.map(x=>if (result_1.count(_ == x) == words.size)x else -1).distinct.filterNot(_ == -1)
+    result_2
+  }
 }
 
 
