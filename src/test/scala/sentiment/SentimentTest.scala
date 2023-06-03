@@ -49,7 +49,8 @@ class SentimentTest extends AnyFunSuite {
 
   test("test getDocumentSplitByPredicate"){
 
-    val data= sentiAnalyse.getDocumentSplitByPredicate("PredicateMatch.txt",x=>x.equals("X"))
+    val data= sentiAnalyse.getDocumentSplitByPredicate("PredicateMatch.txt",x=>x.equals("x") )
+    // TODO: ask about predicate. should be 'x'
    val res=List(
      (1,List("lorem", "ipsum" ,"dolor", "sit", "amet", "consectetur", "adipiscing", "elit","suspendisse", "aliquet", "quis", "ligula", "nec" ,"tristique")),
      (2,List("donec","augue","ipsum","mattis", "et", "elit", "vel", "convallis" ,"convallis", "dui")),
@@ -60,7 +61,7 @@ class SentimentTest extends AnyFunSuite {
   }
 
   test("test analyseSentiments"){
-    
+    // TODO ask. abschnitt nummer fängt mit 1 an!
     val res= List((0,0.42857142857142855,0.035), (1,1.75,0.02), (2,0.3333333333333333,0.03),
         (3,1.2,0.025), (4,0.0,0.04), (5,0.9,0.05), (6,1.0,0.04), (7,-1.5,0.01),
         (8,-0.8333333333333334,0.03), (9,1.1111111111111112,0.045), (10,2.1,0.05),

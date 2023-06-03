@@ -34,13 +34,33 @@ class Sentiments(sentiFile: String) {
       row
     }).toList
     src.close()
-    lines.map(x => proc.getWords(x)).flatten.grouped(wordCount).toList.zipWithIndex.map(x=>(x._2+1,x._1))
+    lines.flatMap(x => proc.getWords(x)).grouped(wordCount).toList.zipWithIndex.map(x=>(x._2+1,x._1))
 
   }
 
-  def getDocumentSplitByPredicate(filename: String, predicate:String=>Boolean): List[(Int, List[String])] = ???
+  def getDocumentSplitByPredicate(filename: String, predicate:String=>Boolean): List[(Int, List[String])] = {
+    val url = getClass.getResource("/" + filename).getPath
+    val src = scala.io.Source.fromFile(url.replaceAll("%20", " "))
+    val iter = src.getLines()
+    val lines: List[String] = (for (row <- iter) yield {
+      row
+    }).toList
+    src.close
+    val lines_1st_line_skipped = lines.tail
+    val result_2 = lines_1st_line_skipped.flatMap(x => proc.getWords(x)).foldLeft(List(List.empty[String])){
+      (acc, word)=>
+        if(predicate(word))List.empty[String] :: acc
+      else
+        (word :: acc.head) :: acc.tail
+    }.reverse.filter(_.nonEmpty).map(x=>x.reverse).zipWithIndex.map(x=>(x._2,x._1))
 
-  def analyseSentiments(l: List[(Int, List[String])]): List[(Int, Double, Double)] = ???
+    result_2
+  }
+
+  def analyseSentiments(l: List[(Int, List[String])]): List[(Int, Double, Double)] = {
+
+    ???
+  }
 
   /** ********************************************************************************************
     *
