@@ -49,7 +49,7 @@ class SentimentTest extends AnyFunSuite {
 
   test("test getDocumentSplitByPredicate"){
 
-    val data= sentiAnalyse.getDocumentSplitByPredicate("PredicateMatch.txt",x=>x.equals("x") )
+    val data= sentiAnalyse.getDocumentSplitByPredicate("PredicateMatch.txt",x=>x.equals("X") )
     // TODO: ask about predicate. should be 'x'
    val res=List(
      (1,List("lorem", "ipsum" ,"dolor", "sit", "amet", "consectetur", "adipiscing", "elit","suspendisse", "aliquet", "quis", "ligula", "nec" ,"tristique")),

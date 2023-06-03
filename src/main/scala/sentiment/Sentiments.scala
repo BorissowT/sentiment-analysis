@@ -47,12 +47,17 @@ class Sentiments(sentiFile: String) {
     }).toList
     src.close
     val lines_1st_line_skipped = lines.tail
-    val result_2 = lines_1st_line_skipped.flatMap(x => proc.getWords(x)).foldLeft(List(List.empty[String])){
-      (acc, word)=>
-        if(predicate(word))List.empty[String] :: acc
-      else
-        (word :: acc.head) :: acc.tail
-    }.reverse.filter(_.nonEmpty).map(x=>x.reverse).zipWithIndex.map(x=>(x._2,x._1))
+    val result_2 = lines_1st_line_skipped.flatMap(x =>
+      if(predicate(x))
+        x
+      else proc.getWords(x)).map(x=>x.toString).foldLeft(List(List.empty[String])){
+        (word_tail, word)=>{
+          if(predicate(word))
+            {List.empty[String] :: word_tail}
+          else
+            (word :: word_tail.head) :: word_tail.tail
+        }
+    }.reverse.map(x=>x.reverse).filter(_.nonEmpty).zipWithIndex.map(x=>(x._2+1,x._1))
 
     result_2
   }
