@@ -63,8 +63,12 @@ class Sentiments(sentiFile: String) {
   }
 
   def analyseSentiments(l: List[(Int, List[String])]): List[(Int, Double, Double)] = {
+    val updatedList = l.flatMap(element =>List((element._1-1,
+      element._2.map(word=>sentiments.getOrElse(word, 0)).filterNot(_ == 0).sum.toDouble / element._2.size.toDouble,
+      element._2.map(word=>sentiments.getOrElse(word, 0)).filterNot(_ == 0).size.toDouble/element._2.size.toDouble
+    )))
 
-    ???
+    updatedList
   }
 
   /** ********************************************************************************************
